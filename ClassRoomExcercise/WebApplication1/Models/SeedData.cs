@@ -13,8 +13,8 @@ namespace WebApplication1.Models
             using (var context = new AdContext(
                 serviceProvider.GetRequiredService<DbContextOptions<AdContext>>()))
             {
-                // Look for any movies.
-                if (context.Ads.Any())
+                // Look for any advertisement
+                if (context.Categories.Any())
                 {
                     return;   // DB has been seeded
                 }

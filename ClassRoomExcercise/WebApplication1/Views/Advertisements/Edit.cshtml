@@ -1,8 +1,11 @@
 ﻿@model WebApplication1.Models.Advertisement
+
 @{
     ViewData["Title"] = "Edit";
 }
+
 <h2>Edit</h2>
+
 <h4>Advertisement</h4>
 <hr />
 <div class="row">
@@ -36,9 +39,11 @@
         </form>
     </div>
 </div>
+
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -10,23 +10,23 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class AdvertisementController : Controller
+    public class AdvertisementsController : Controller
     {
         private readonly AdContext _context;
 
-        public AdvertisementController(AdContext context)
+        public AdvertisementsController(AdContext context)
         {
             _context = context;
         }
 
-        // GET: test2
+        // GET: Advertisements
         public async Task<IActionResult> Index()
         {
             var adContext = _context.Ads.Include(a => a.Category);
             return View(await adContext.ToListAsync());
         }
 
-        // GET: test2/Details/5
+        // GET: Advertisements/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,14 +45,14 @@ namespace WebApplication1.Controllers
             return View(advertisement);
         }
 
-        // GET: test2/Create
+        // GET: Advertisements/Create
         public IActionResult Create()
         {
             ViewData["CategoryId"] = new SelectList(_context.Categories, "ID", "Name");
             return View();
         }
 
-        // POST: test2/Create
+        // POST: Advertisements/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -69,7 +69,7 @@ namespace WebApplication1.Controllers
             return View(advertisement);
         }
 
-        // GET: test2/Edit/5
+        // GET: Advertisements/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,7 +86,7 @@ namespace WebApplication1.Controllers
             return View(advertisement);
         }
 
-        // POST: test2/Edit/5
+        // POST: Advertisements/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -122,7 +122,7 @@ namespace WebApplication1.Controllers
             return View(advertisement);
         }
 
-        // GET: test2/Delete/5
+        // GET: Advertisements/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -141,7 +141,7 @@ namespace WebApplication1.Controllers
             return View(advertisement);
         }
 
-        // POST: test2/Delete/5
+        // POST: Advertisements/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
