@@ -11,9 +11,10 @@ using WebApplication1.Data;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(AdContext))]
-    partial class AdContextModelSnapshot : ModelSnapshot
+    [Migration("20170925125155_Add-Migration Initial")]
+    partial class AddMigrationInitial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -10,22 +10,23 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class AdvertisementsController : Controller
+    public class AdvertisementController : Controller
     {
         private readonly AdContext _context;
 
-        public AdvertisementsController(AdContext context)
+        public AdvertisementController(AdContext context)
         {
             _context = context;
         }
 
-        // GET: Advertisements
+        // GET: test2
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Ads.ToListAsync());
+            var adContext = _context.Ads.Include(a => a.Category);
+            return View(await adContext.ToListAsync());
         }
 
-        // GET: Advertisements/Details/5
+        // GET: test2/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,6 +35,7 @@ namespace WebApplication1.Controllers
             }
 
             var advertisement = await _context.Ads
+                .Include(a => a.Category)
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (advertisement == null)
             {
@@ -43,18 +45,19 @@ namespace WebApplication1.Controllers
             return View(advertisement);
         }
 
-        // GET: Advertisements/Create
+        // GET: test2/Create
         public IActionResult Create()
         {
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "ID", "Name");
             return View();
         }
 
-        // POST: Advertisements/Create
+        // POST: test2/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Description,Price")] Advertisement advertisement)
+        public async Task<IActionResult> Create([Bind("ID,Name,Description,Price,CategoryId")] Advertisement advertisement)
         {
             if (ModelState.IsValid)
             {
@@ -62,10 +65,11 @@ namespace WebApplication1.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "ID", "Name", advertisement.CategoryId);
             return View(advertisement);
         }
 
-        // GET: Advertisements/Edit/5
+        // GET: test2/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,15 +82,16 @@ namespace WebApplication1.Controllers
             {
                 return NotFound();
             }
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "ID", "Name", advertisement.CategoryId);
             return View(advertisement);
         }
 
-        // POST: Advertisements/Edit/5
+        // POST: test2/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Description,Price")] Advertisement advertisement)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Description,Price,CategoryId")] Advertisement advertisement)
         {
             if (id != advertisement.ID)
             {
@@ -113,10 +118,11 @@ namespace WebApplication1.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "ID", "Name", advertisement.CategoryId);
             return View(advertisement);
         }
 
-        // GET: Advertisements/Delete/5
+        // GET: test2/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -125,6 +131,7 @@ namespace WebApplication1.Controllers
             }
 
             var advertisement = await _context.Ads
+                .Include(a => a.Category)
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (advertisement == null)
             {
@@ -134,7 +141,7 @@ namespace WebApplication1.Controllers
             return View(advertisement);
         }
 
-        // POST: Advertisements/Delete/5
+        // POST: test2/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

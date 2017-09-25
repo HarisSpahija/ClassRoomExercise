@@ -9,5 +9,7 @@ namespace WebApplication1.Models
     {
         public int ID { get; set; }
         public string Name { get; set; }
+
+        public List<Advertisement> Advertisements { get; set; }
     }
 }
